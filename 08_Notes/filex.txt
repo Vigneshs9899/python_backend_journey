@@ -1,0 +1,3 @@
+Why did you replace a list with a dictionary?
+
+A dictionary stores data using meaningful keys instead of numeric indexes. That makes code easier to read, maintain and extend when fields are needed.

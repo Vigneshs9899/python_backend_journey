@@ -1,5 +1,3 @@
-
-
 employee = None
 
 print("Employee Management System")
@@ -9,14 +7,18 @@ print("2. View Employee")
 print("3. Exit")
 
 def add_emp():
+    emp_id = int(input("Enter employee_id: "))
     emp_name = input("Enter employee_name: ")
     emp_salary = int(input("Enter employee_salary: "))
-    employee = [emp_name, emp_salary]
+    emp_department = input("Enter employee_department: ")
+    employee = {"id": emp_id, "name": emp_name, "salary": emp_salary, "department": emp_department}
     return employee
 
 def view_emp(employee):
-    print("Employee Name: ", employee[0])
-    print("Employee Salary: ", employee[1])
+    print("Employee ID: ", employee["id"])
+    print("Employee Name: ", employee["name"])
+    print("Employee Salary: ", employee["salary"])
+    print("Employee Department: ", employee["department"])
 
 ch = 0
 while (ch != 3):
@@ -33,6 +35,9 @@ while (ch != 3):
                 view_emp(employee)
         case 3:
             exit()
+
+        case default:
+            print("Invalid choice, please try again")
 
 
 
