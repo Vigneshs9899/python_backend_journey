@@ -12,6 +12,7 @@ def add_emp():
     emp_salary = int(input("Enter employee_salary: "))
     emp_department = input("Enter employee_department: ")
     employee = {"id": emp_id, "name": emp_name, "salary": emp_salary, "department": emp_department}
+    print("Employee added successfully")
     return employee
 
 def view_emp(employee):
@@ -34,7 +35,8 @@ while (ch != 3):
             else:
                 view_emp(employee)
         case 3:
-            exit()
+            print("Thank you for using Employee Management System.")
+            break
 
         case default:
             print("Invalid choice, please try again")
