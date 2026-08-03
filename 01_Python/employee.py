@@ -1,4 +1,4 @@
-employee = None
+employees = []
 
 print("Employee Management System")
 print("--------------------------")
@@ -20,6 +20,7 @@ def view_emp(employee):
     print("Employee Name: ", employee["name"])
     print("Employee Salary: ", employee["salary"])
     print("Employee Department: ", employee["department"])
+    print("-" * 30)
 
 ch = 0
 while (ch != 3):
@@ -28,17 +29,23 @@ while (ch != 3):
     
     match ch:
         case 1:
-            employee = add_emp()
+            while True:
+                employee = add_emp()
+                employees.append(employee)
+                ch1 = input("Do you want to add another employee? (y/n): ")
+                if ch1.lower() != 'y':
+                    break
         case 2:
-            if employee is None:
+            if not employees:
                 print("No employee added") 
             else:
-                view_emp(employee)
+                for emp in employees:
+                    view_emp(emp)
         case 3:
             print("Thank you for using Employee Management System.")
             break
 
-        case default:
+        case _:
             print("Invalid choice, please try again")
 
 
