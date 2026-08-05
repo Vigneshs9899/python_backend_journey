@@ -4,7 +4,9 @@ print("Employee Management System")
 print("--------------------------")
 print("1. Add Employee")
 print("2. View Employee")
-print("3. Exit")
+print("3. Search Employee by ID")
+print("4. Update Employee")
+print("5. Exit")
 
 def add_emp():
     emp_id = int(input("Enter employee_id: "))
@@ -22,8 +24,17 @@ def view_emp(employee):
     print("Employee Department: ", employee["department"])
     print("-" * 30)
 
+def update_employee(emp):
+
+    update_salary = int(input("Enter the updated salary: "))
+    emp["salary"] = update_salary
+    print("Employee Data updated successfully")
+    view_emp(emp)
+
+        
+
 ch = 0
-while (ch != 3):
+while (ch != 4):
 
     ch = int(input("Enter your choice: "))
     
@@ -42,11 +53,36 @@ while (ch != 3):
                 for emp in employees:
                     view_emp(emp)
         case 3:
+            search_id = int(input("Enter employee_id to search: "))
+            found = False
+            for emp in employees:
+                if emp["id"] == search_id:
+                    view_emp(emp)
+                    found = True
+                    break
+            if not found:
+                print("Employee not found")
+
+        case 4:
+            update_id = int(input("Enter employee id to update: "))
+            found = False
+            for emp in employees:
+                if emp["id"] == update_id:
+                    update_employee(emp)
+                    found = True
+                    break
+            if not found:
+                print("Employee not found")
+            
+        case 5:
             print("Thank you for using Employee Management System.")
             break
 
         case _:
             print("Invalid choice, please try again")
+
+
+
 
 
 
