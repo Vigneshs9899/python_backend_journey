@@ -6,7 +6,8 @@ print("1. Add Employee")
 print("2. View Employee")
 print("3. Search Employee by ID")
 print("4. Update Employee")
-print("5. Exit")
+print("5. Delete Employee")
+print("6. Exit")
 
 def add_emp():
     emp_id = int(input("Enter employee_id: "))
@@ -25,11 +26,16 @@ def view_emp(employee):
     print("-" * 30)
 
 def update_employee(emp):
-
     update_salary = int(input("Enter the updated salary: "))
     emp["salary"] = update_salary
     print("Employee Data updated successfully")
     view_emp(emp)
+
+def delete_employee(emp):
+    employees.remove(emp)
+    print("Employee data deleted successfully")
+    view_emp()
+
 
         
 
@@ -72,9 +78,18 @@ while (ch != 4):
                     found = True
                     break
             if not found:
-                print("Employee not found")
-            
+              print("Employee not found")
         case 5:
+            delete_id = int(input("Enter employee id to delete: "))
+            found = False
+            for emp in employees:
+                if emp["id"] == delete_id:
+                    delete_employee(emp)
+                    found = True
+                    break
+            if not found:
+                print("Employee not found")
+        case 6:
             print("Thank you for using Employee Management System.")
             break
 
