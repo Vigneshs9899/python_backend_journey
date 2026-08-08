@@ -9,8 +9,7 @@ print("4. Update Employee")
 print("5. Delete Employee")
 print("6. Exit")
 
-def add_emp():
-    emp_id = int(input("Enter employee_id: "))
+def add_emp(emp_id):
     emp_name = input("Enter employee_name: ")
     emp_salary = int(input("Enter employee_salary: "))
     emp_department = input("Enter employee_department: ")
@@ -34,24 +33,29 @@ def update_employee(emp):
 def delete_employee(emp):
     employees.remove(emp)
     print("Employee data deleted successfully")
-    view_emp()
 
 
         
 
 ch = 0
-while (ch != 4):
+while (ch != 6):
 
     ch = int(input("Enter your choice: "))
     
     match ch:
         case 1:
-            while True:
-                employee = add_emp()
-                employees.append(employee)
-                ch1 = input("Do you want to add another employee? (y/n): ")
-                if ch1.lower() != 'y':
+            emp_id=int(input("Enter the employee id: "))
+            found = False
+            for emp in employees:
+                if emp["id"] == emp_id:
+                    found = True
+                    print("Employee already exists")
                     break
+            if not found:
+                employee = add_emp(emp_id)
+                employees.append(employee)
+                
+            
         case 2:
             if not employees:
                 print("No employee added") 
