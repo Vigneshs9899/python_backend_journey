@@ -11,7 +11,12 @@ print("6. Exit")
 
 def add_emp(emp_id):
     emp_name = input("Enter employee_name: ")
-    emp_salary = int(input("Enter employee_salary: "))
+    while True:
+        try:
+            emp_salary = int(input("Enter employee_salary: "))
+            break
+        except ValueError:
+            print("Invalid salary. Please enter number.")
     emp_department = input("Enter employee_department: ")
     employee = {"id": emp_id, "name": emp_name, "salary": emp_salary, "department": emp_department}
     print("Employee added successfully")
@@ -40,11 +45,21 @@ def delete_employee(emp):
 ch = 0
 while (ch != 6):
 
-    ch = int(input("Enter your choice: "))
+    while True:
+        try:
+            ch = int(input("Enter your choice: "))
+            break
+        except ValueError:
+            print("Invalid choice. Please enter a number.")
     
     match ch:
         case 1:
-            emp_id=int(input("Enter the employee id: "))
+            while True:
+                try:
+                    emp_id=int(input("Enter the employee id: "))
+                    break
+                except ValueError:
+                    print("Invalid ID. Please enter a number.")
             found = False
             for emp in employees:
                 if emp["id"] == emp_id:
@@ -74,7 +89,12 @@ while (ch != 6):
                 print("Employee not found")
 
         case 4:
-            update_id = int(input("Enter employee id to update: "))
+            while True:
+                try:
+                    update_id = int(input("Enter employee id to update: "))
+                    break
+                except ValueError:
+                    print("Invalid ID. Please enter a number.")
             found = False
             for emp in employees:
                 if emp["id"] == update_id:
@@ -83,8 +103,14 @@ while (ch != 6):
                     break
             if not found:
               print("Employee not found")
+
         case 5:
-            delete_id = int(input("Enter employee id to delete: "))
+            while True:
+                try:
+                    delete_id = int(input("Enter employee id to delete: "))
+                    break
+                except ValueError:
+                    print("Invalid ID. Please enter a number.")
             found = False
             for emp in employees:
                 if emp["id"] == delete_id:
