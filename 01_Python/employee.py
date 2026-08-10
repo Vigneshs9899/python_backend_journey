@@ -1,5 +1,6 @@
 employees = []
 
+
 print("Employee Management System")
 print("--------------------------")
 print("1. Add Employee")
@@ -11,12 +12,7 @@ print("6. Exit")
 
 def add_emp(emp_id):
     emp_name = input("Enter employee_name: ")
-    while True:
-        try:
-            emp_salary = int(input("Enter employee_salary: "))
-            break
-        except ValueError:
-            print("Invalid salary. Please enter number.")
+    emp_salary = get_integer_input("Enter employee_salary: ")
     emp_department = input("Enter employee_department: ")
     employee = {"id": emp_id, "name": emp_name, "salary": emp_salary, "department": emp_department}
     print("Employee added successfully")
@@ -30,7 +26,7 @@ def view_emp(employee):
     print("-" * 30)
 
 def update_employee(emp):
-    update_salary = int(input("Enter the updated salary: "))
+    update_salary = get_integer_input("Enter the updated salary: ")
     emp["salary"] = update_salary
     print("Employee Data updated successfully")
     view_emp(emp)
@@ -39,27 +35,26 @@ def delete_employee(emp):
     employees.remove(emp)
     print("Employee data deleted successfully")
 
+def get_integer_input(message):
+    while True:
+        try:
+            value = int(input(message))
+            return value
+        except ValueError:
+            print("Invalid. Please enter a number.")
+
 
         
 
 ch = 0
 while (ch != 6):
 
-    while True:
-        try:
-            ch = int(input("Enter your choice: "))
-            break
-        except ValueError:
-            print("Invalid choice. Please enter a number.")
+    ch = get_integer_input("Enter your choice: ")
+    
     
     match ch:
         case 1:
-            while True:
-                try:
-                    emp_id=int(input("Enter the employee id: "))
-                    break
-                except ValueError:
-                    print("Invalid ID. Please enter a number.")
+            emp_id = get_integer_input("Enter employee id: ")        
             found = False
             for emp in employees:
                 if emp["id"] == emp_id:
@@ -78,7 +73,7 @@ while (ch != 6):
                 for emp in employees:
                     view_emp(emp)
         case 3:
-            search_id = int(input("Enter employee_id to search: "))
+            search_id = get_integer_input("Enter employee_id to search: ")
             found = False
             for emp in employees:
                 if emp["id"] == search_id:
@@ -89,12 +84,7 @@ while (ch != 6):
                 print("Employee not found")
 
         case 4:
-            while True:
-                try:
-                    update_id = int(input("Enter employee id to update: "))
-                    break
-                except ValueError:
-                    print("Invalid ID. Please enter a number.")
+            update_id = get_integer_input("Enter employee id to update: ")
             found = False
             for emp in employees:
                 if emp["id"] == update_id:
@@ -105,12 +95,7 @@ while (ch != 6):
               print("Employee not found")
 
         case 5:
-            while True:
-                try:
-                    delete_id = int(input("Enter employee id to delete: "))
-                    break
-                except ValueError:
-                    print("Invalid ID. Please enter a number.")
+            delete_id = get_integer_input("Enter employee id to delete: ")
             found = False
             for emp in employees:
                 if emp["id"] == delete_id:
