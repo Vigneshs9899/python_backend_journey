@@ -31,7 +31,7 @@ def update_employee(emp):
     print("Employee Data updated successfully")
     view_emp(emp)
 
-def delete_employee(emp):
+def delete_employee(emp, employees):
     employees.remove(emp)
     print("Employee data deleted successfully")
 
@@ -99,7 +99,7 @@ while (ch != 6):
             found = False
             for emp in employees:
                 if emp["id"] == delete_id:
-                    delete_employee(emp)
+                    delete_employee(emp, employees)
                     found = True
                     break
             if not found:
