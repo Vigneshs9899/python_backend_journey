@@ -43,7 +43,12 @@ def get_integer_input(message):
         except ValueError:
             print("Invalid. Please enter a number.")
 
-
+def find_employee(employees, search_id):
+    
+    for emp in employees:
+        if emp["id"] == search_id:
+            return emp        
+    return None
         
 
 ch = 0
@@ -55,15 +60,12 @@ while (ch != 6):
     match ch:
         case 1:
             emp_id = get_integer_input("Enter employee id: ")        
-            found = False
-            for emp in employees:
-                if emp["id"] == emp_id:
-                    found = True
-                    print("Employee already exists")
-                    break
-            if not found:
+            employee = find_employee(employees, emp_id)
+            if employee is None:
                 employee = add_emp(emp_id)
-                employees.append(employee)
+                employees.append(employee)                    
+            else:
+                print("Employee already exists")
                 
             
         case 2:
@@ -74,36 +76,30 @@ while (ch != 6):
                     view_emp(emp)
         case 3:
             search_id = get_integer_input("Enter employee_id to search: ")
-            found = False
-            for emp in employees:
-                if emp["id"] == search_id:
-                    view_emp(emp)
-                    found = True
-                    break
-            if not found:
+            employee = find_employee(employees, search_id)
+
+            if employee is None:
                 print("Employee not found")
+            else:
+                view_emp(employee)
+            
 
         case 4:
             update_id = get_integer_input("Enter employee id to update: ")
-            found = False
-            for emp in employees:
-                if emp["id"] == update_id:
-                    update_employee(emp)
-                    found = True
-                    break
-            if not found:
-              print("Employee not found")
+            employee = find_employee(employees, update_id)
+            if employee is None:
+                print("Employee not found")
+            else:
+                update_employee(employee)
 
         case 5:
             delete_id = get_integer_input("Enter employee id to delete: ")
-            found = False
-            for emp in employees:
-                if emp["id"] == delete_id:
-                    delete_employee(emp, employees)
-                    found = True
-                    break
-            if not found:
+            employee = find_employee(employees, delete_id)
+            if employee is None:
                 print("Employee not found")
+            else:
+                delete_employee(employee, employees)
+
         case 6:
             print("Thank you for using Employee Management System.")
             break
