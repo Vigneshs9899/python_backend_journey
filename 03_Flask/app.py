@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -20,9 +20,10 @@ def api():
 
 @app.route("/employees", methods=["POST"])
 def add_employee():
+    employee = request.get_json()
     return {
-        "message": "Employee created successfully",
-        "status": "success"
+        "message": "Employee recieved successfully",
+        "employee": employee
     }
 
 
