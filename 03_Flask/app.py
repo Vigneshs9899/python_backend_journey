@@ -2,6 +2,8 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+employees = []
+
 @app.route("/")
 def home():
     return "Hello, Flask!"
@@ -49,11 +51,21 @@ def add_employee():
             return{
                 "message": "Salary must be an integer"
             }, 400
-        
+    employees.append(employee)   
     return {
                "message": "Employee recieved successfully",
                "employee": employee
-           }, 200
+           }, 201
+
+
+@app.route("/employees", methods=["GET"])
+def get_employees():
+      return {
+            "message": "Employee data recieved",
+            "employee": employees
+      }, 200
+
+
 
 if(__name__) == "__main__":
     app.run(debug=True)
