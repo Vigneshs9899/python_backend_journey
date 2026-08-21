@@ -66,6 +66,19 @@ def get_employees():
       }, 200
 
 
+@app.route("/employees/<int:employee_id>", methods=["GET"])
+def get_employee(employee_id):
+      for employee in employees:
+        if employee["id"] == employee_id:
+            return {
+                "message": "Employee recieved",
+                "employee": employee
+            
+            },200
+      return {
+                  "message": "Employee id not found"
+            }, 400
+      
 
 if(__name__) == "__main__":
     app.run(debug=True)
