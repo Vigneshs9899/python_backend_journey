@@ -78,6 +78,24 @@ def get_employee(employee_id):
       return {
                   "message": "Employee id not found"
             }, 400
+
+
+@app.route("/employees/<int:employee_id>", methods=["PUT"])
+def update_employee(employee_id):
+    for employee in employees:
+        if employee["id"] == employee_id:
+            update_data = request.get_json()
+            employee["salary"] = update_data["salary"]
+            return{
+                "message": "Employee Data updated",
+                "employee": employee
+            }, 200
+          
+    return {
+          
+    "message": "Employee id not found"
+          
+    }, 404
       
 
 if(__name__) == "__main__":

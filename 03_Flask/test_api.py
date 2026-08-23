@@ -14,3 +14,13 @@ response = requests.post(
 
 print(response.status_code)
 print(response.json())
+
+response = requests.put(
+    "http://127.0.0.1:5000/employees/1",
+    json={
+        "salary": 70000
+    }
+)
+
+print(response.status_code)
+print(response.json())
