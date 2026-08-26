@@ -96,6 +96,18 @@ def update_employee(employee_id):
     "message": "Employee id not found"
           
     }, 404
+
+@app.route("/employees/<int:employee_id>", methods=["DELETE"])
+def delete_employee(employee_id):
+     for employee in employees:
+          if employee["id"] == employee_id:
+            employees.remove(employee)
+            return{
+                 "message": "Employee data deleted successfully"
+            }, 200
+     return{
+        "message": "Employee id not found"
+        }, 404
       
 
 if(__name__) == "__main__":

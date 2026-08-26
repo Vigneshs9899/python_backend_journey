@@ -24,3 +24,22 @@ response = requests.put(
 
 print(response.status_code)
 print(response.json())
+
+
+
+response = requests.delete(
+    "http://127.0.0.1:5000/employees/1"
+)
+
+print(response.status_code)
+print(response.json())
+
+
+
+
+response = requests.delete(
+    "http://127.0.0.1:5000/employees/99"
+)
+
+print(response.status_code)
+print(response.json())
