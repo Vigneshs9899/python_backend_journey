@@ -14,12 +14,12 @@ import requests
 
 # print(response.status_code)
 # print(response.json())
-response = requests.get(
-    "http://127.0.0.1:5000/employees/1"
-)
+# response = requests.get(
+#     "http://127.0.0.1:5000/employees/1"
+# )
 
-print(response.status_code)
-print(response.json())
+# print(response.status_code)
+# print(response.json())
 
 # response = requests.post(
 #     "http://127.0.0.1:5000/employees",
@@ -83,3 +83,52 @@ print(response.json())
 
 # print(response.status_code)
 # print(response.json())
+
+# response = requests.post(
+#     "http://127.0.0.1:5000/employees",
+#     json={
+#         "id": 2,
+#         "name": "Vijay",
+#         "salary": 10000,
+#         "department": "IT"
+
+#     }
+
+#     )
+
+# print(response.status_code)
+# print(response.json())
+
+
+# response = requests.post(
+#     "http://127.0.0.1:5000/employees",
+#     json={
+#         "id": 3,
+#         "name": "Ajith",
+#         "salary": 90000,
+#         "department": "IT"
+
+#     }
+
+#     )
+
+# print(response.status_code)
+# print(response.json())
+
+# response = requests.put(
+#     "http://127.0.0.1:5000/employees/2",
+#     json={
+#         "salary": 20000 
+#     }
+# )
+
+# print(response.status_code)
+# print(response.json())
+
+
+response = requests.delete(
+    'http://127.0.0.1:5000/employees/44',
+)
+
+print(response.status_code)
+print(response.json())

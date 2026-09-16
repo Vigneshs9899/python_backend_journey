@@ -1,5 +1,5 @@
 from db import get_connection
-
+from psycopg.errors import UniqueViolation
 
 
 
@@ -8,30 +8,43 @@ def update_employee_salary(employee_id, salary):
     connection = get_connection()
     cursor = connection.cursor()
 
-    cursor.execute(
-        """
-        UPDATE employees
-        SET salary = %s
-        WHERE id = %s
-        """,
-        (salary, employee_id)
-    )
+    try:
+        cursor.execute(
+            """
+            UPDATE employees
+            SET salary = %s
+            WHERE id = %s
+            """,
+            (salary, employee_id)
+        )
 
-    connection.commit()
 
-    cursor.execute(
-        """
-        SELECT id, name, salary, department
-        FROM employees
-        WHERE id = %s
-        """,
-        (employee_id,)
-    )
+        updated = cursor.rowcount
 
-    row = cursor.fetchone()
+        if updated == 0:
+            connection.rollback()
+            return None
 
-    cursor.close()
-    connection.close()
+        connection.commit()
+
+        cursor.execute(
+            """
+            SELECT id, name, salary, department
+            FROM employees
+            WHERE id = %s
+            """,
+            (employee_id,)
+        )
+
+        row = cursor.fetchone()
+
+    except Exception:
+        connection.rollback()
+        raise
+
+    finally:
+        cursor.close()
+        connection.close()
 
     if row:
         return {
@@ -47,20 +60,26 @@ def delete_employee(employee_id):
     connection = get_connection()
     cursor = connection.cursor()
 
-    cursor.execute(
-        """
-        DELETE FROM employees
-        WHERE id = %s
-        """,
-        (employee_id,)
-    )
+    try:
+        cursor.execute(
+            """
+            DELETE FROM employees
+            WHERE id = %s
+            """,
+            (employee_id,)
+        )
 
-    connection.commit()
+        connection.commit()
+    
+        deleted = cursor.rowcount
 
-    deleted = cursor.rowcount
+    except Exception:
+        connection.rollback()
+        raise
 
-    cursor.close()
-    connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
     return deleted > 0
 
@@ -89,26 +108,7 @@ def get_all_employees():
     connection.close()
 
     return employees
-    connection = get_connection()
-    cursor = connection.cursor()
-
-    cursor.execute("SELECT * FROM employees")
-
-    rows = cursor.fetchall()
-
-  
     
-    for row in rows:
-        employee = {
-            "id": row[0],
-            "name": row[1],
-            "salary": row[2],
-            "department": row[3]
-        }
-    
-    
-    cursor.close()
-    connection.close()
     
 
 def get_employee_by_id(employee_id):
@@ -144,22 +144,32 @@ def create_employee(employee):
     connection = get_connection()
     cursor = connection.cursor()
 
-    cursor.execute(
-        """
-        INSERT INTO employees (id, name, salary, department)
-        VALUES (%s, %s, %s, %s)
-        """,
-        (
-            employee["id"],
-            employee["name"],
-            employee["salary"],
-            employee["department"]
+    try:
+        cursor.execute(
+            """
+            INSERT INTO employees (id, name, salary, department)
+            VALUES (%s, %s, %s, %s)
+            """,
+            (
+                employee["id"],
+                employee["name"],
+                employee["salary"],
+                employee["department"]
+            )
         )
-    )
+    
 
-    connection.commit()
+        connection.commit()
+        return employee
 
-    cursor.close()
-    connection.close()
+    except UniqueViolation:
+        connection.rollback()
+        return None
 
-    return employee
+    except Exception:
+        connection.rollback()
+        raise
+
+    finally:
+        cursor.close()      
+        connection.close()
