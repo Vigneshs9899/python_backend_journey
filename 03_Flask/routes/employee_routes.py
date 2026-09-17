@@ -9,6 +9,11 @@ employee_bp = Blueprint("employee", __name__)
 def add_employee():
     employee = request.get_json()
 
+    if not employee:
+        return {
+            "message": "Request body must contain JSON data"
+        }, 400
+
     required_fields = ["id", "name", "salary", "department"]
 
     for fields in required_fields:
@@ -17,24 +22,33 @@ def add_employee():
                 "message": f"Employee {fields} is required"
             }, 400
 
-    if not isinstance(employee["id"], int):
+    if not isinstance(employee["id"], int) or isinstance(employee["id"], bool):
         return {
             "message": "ID must be an integer"
         }, 400
 
-    if not isinstance(employee["name"], str):
+    if employee["id"] <= 0:
         return {
-            "message": "Name must be string"
+            "message": "ID must be greater than 0"
         }, 400
 
-    if not isinstance(employee["department"], str):
+    if not isinstance(employee["name"], str) or not employee["name"].strip():
         return {
-            "message": "Department must be string"
+            "message": "Name must be a non-empty string"
         }, 400
 
-    if not isinstance(employee["salary"], int):
+    if not isinstance(employee["department"], str) or not employee["department"].strip():
+        return {
+            "message": "Department must be a non-empty string"
+        }, 400
+
+    if not isinstance(employee["salary"], int) or isinstance(employee["salary"], bool):
         return {
             "message": "Salary must be an integer"
+        }, 400
+    if employee["salary"] < 0:
+        return {
+            "message": "Salary cannot be negative"
         }, 400
 
     employee = create_employee(employee)
@@ -76,6 +90,25 @@ def get_employee(employee_id):
 @employee_bp.route("/employees/<int:employee_id>", methods=["PUT"])
 def update_employee(employee_id):
     update_data = request.get_json()
+
+    if not update_data or "salary" not in update_data:
+
+        return {
+                  "message": "Salary is required"
+              }, 400
+
+    if not isinstance(update_data["salary"], int) or isinstance(update_data["salary"], bool):
+        return {
+            "message": "Salary must be an integer"
+        }, 400
+
+
+    if update_data["salary"] < 0:
+        return {
+            "message": "Salary cannot be negative"
+        }, 400
+      
+
     employee = update_employee_salary(
           employee_id,
           update_data["salary"]
